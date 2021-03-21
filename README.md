@@ -60,15 +60,17 @@ The LCD bus wirings is as follow
 | Bus 1 / Arduino Pin | JHD 162 A |
 |---------------------|-----------|
 | VCC | VCC |
-| D2 | Enable |
+| D2 | Registry Select |
 | D3 | RW |
-| D4 | Registery Select |
-| D5 | Led + 5V |
-| D6 | Led - Ground |
-| D7 | N/A |
-| D8 | D7|
-| D9 | D6 |
+| D4 | Enable |
+| D5 | D4 |
+| D6 | D5 |
+| D7 | D6 |
+| D8 | D7 |
+| D9 | / |
 | GND | VSS|
+
+
 
 Classic code linking is matching the following schema
 
@@ -76,6 +78,8 @@ Classic code linking is matching the following schema
 
 ```arduino
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+LiquidCrystal(rs, enable, d4, d5, d6, d7) 
 ```
 
 According to the [documentation of lcd constructor](https://www.arduino.cc/en/Reference/LiquidCrystalConstructor) the constructor take at least 4 data bus pin d4-->d7
@@ -84,7 +88,7 @@ According to the [documentation of lcd constructor](https://www.arduino.cc/en/Re
 So we should have the following code with BUS 1
 
 ```arduino
-LiquidCrystal lcd(4, 2, 5, 6, 7, 8);
+LiquidCrystal lcd(2, 3, 4, 5, 6, 7, 8);
 ```
 
 
@@ -95,7 +99,7 @@ LiquidCrystal lcd(12, 11, 10, 5, 4, 3, 2);
 
 void setup()
 {
-  lcd.begin(16,1);
+  lcd.begin(16,2); // don't know why 16,1 is high contrast
   lcd.print("hello, world!");
 }
 
